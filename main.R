@@ -5,10 +5,8 @@ setwd("DIR")
 work.dir <- getwd()
 print(work.dir)
 
-
 # bibliotecas utilizadas
 library(fitdistrplus)
-
 
 #nome da namelist e diretorio de trabalho: ./.
 namelist.filename <- "namelist_ec.txt"
@@ -37,7 +35,7 @@ for (i in seq_len(dim(x)[1])){
         assign(x[i,1],x[i,2])
         cat("variavel ",x[i,1],"  = ",x[i,2],"|\n")
     } else {
-            cat("variavel definida incorretamente no amelise...linha ",i,"\n")
+            cat("variavel definida incorretamente no namelist...linha ",i,"\n")
     }
 }
 

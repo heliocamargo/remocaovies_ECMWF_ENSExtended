@@ -1,0 +1,12 @@
+model=ECMWF
+n.subbac=117
+ic.date.char=20230105
+conf.file=./configuracao_teste1.xlsx
+input.dir.obs=./Arq_Entrada/OBS
+n.ens.f=51
+n.ens.h=11
+input.dir.f=./Arq_Entrada/ECMWF/Prev
+input.dir.h=./Arq_Entrada/ECMWF/Reforecast
+nyears.hind=20
+ndays.fct=45
+out.dir=./Arq_Saida/ECMWF/Prev_Rem

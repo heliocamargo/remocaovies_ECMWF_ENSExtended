@@ -1,6 +1,7 @@
 # Programa principal
 # Carrega as funcoes utilizadas, gera arquivos por sub-bacia (bac) e chama a funcao que faz a correcao
 
+# substituir DIR
 setwd("DIR")
 work.dir <- getwd()
 print(work.dir)
@@ -10,8 +11,11 @@ library(fitdistrplus)
 
 #nome da namelist e diretorio de trabalho: ./.
 namelist.filename <- "namelist_ec.txt"
-work.dir <- setwd(getwd())
-work.dir
+#setwd("C:/Users/hcamargo/OneDrive - Operador Nacional do Sistema Eletrico/codes/remocaovies_ECMWF_ENSExtended")
+#work.dir <- getwd()
+#print(work.dir)
+#work.dir <- setwd(getwd())
+#work.dir
 
 # algumas funcoes utilizadas
 source(paste0(work.dir,"/Auxiliar/read_function.R"))

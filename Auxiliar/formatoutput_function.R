@@ -1,5 +1,5 @@
 # formata arquivo por ensmember com as sub-bacias em conf.file
-formatoutput <- function (model,ic.date.char,out.dir,cod,n.ens.f) {
+formatoutput <- function (model,ic.date.char,out.dir,cod,n.ens.f) { # add n.ens.f as funct parameter
 
     pref <- paste0(model,"_m_")
     nbacs <- length(cod)

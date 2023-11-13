@@ -1,21 +1,20 @@
 # Programa principal
 # Carrega as funcoes utilizadas, gera arquivos por sub-bacia (bac) e chama a funcao que faz a correcao
 
-# substituir DIR
-setwd("DIR")
+setwd("C:/He")
 work.dir <- getwd()
 print(work.dir)
 
+
 # bibliotecas utilizadas
 library(fitdistrplus)
+library(lubridate)
+#
 
 #nome da namelist e diretorio de trabalho: ./.
 namelist.filename <- "namelist_ec.txt"
-#setwd("C:/Users/hcamargo/OneDrive - Operador Nacional do Sistema Eletrico/codes/remocaovies_ECMWF_ENSExtended")
-#work.dir <- getwd()
-#print(work.dir)
-#work.dir <- setwd(getwd())
-#work.dir
+work.dir <- getwd()
+print(work.dir)
 
 # algumas funcoes utilizadas
 source(paste0(work.dir,"/Auxiliar/read_function.R"))
@@ -24,6 +23,9 @@ source(paste0(work.dir,"/Auxiliar/splitcdf_function.R"))
 source(paste0(work.dir,"/Auxiliar/add0s_function.R"))
 source(paste0(work.dir,"/Auxiliar/matchandcorrectfct_function.R"))
 source(paste0(work.dir,"/Auxiliar/formatoutput_function.R"))
+# funcao auxiliar: corta caracteres com espacos em branco
+trim.trailing <- function (x) sub("\\s+$", "", x)
+
 
 # parametros (prthresh) e numero de segmentos para a divisao da CDF
 prthresh <- 0.2 # onde prec obs < prthresh, prec obs = 0
@@ -39,7 +41,7 @@ for (i in seq_len(dim(x)[1])){
         assign(x[i,1],x[i,2])
         cat("variavel ",x[i,1],"  = ",x[i,2],"|\n")
     } else {
-            cat("variavel definida incorretamente no namelist...linha ",i,"\n")
+            cat("variavel definida incorretamente no amelise...linha ",i,"\n")
     }
 }
 
@@ -48,28 +50,82 @@ ic.date <- as.Date(ic.date.char, format = "%Y%m%d")
 ic.date.yyyy <- format(ic.date, "%Y")
 ic.date.format <- format(ic.date, format = "%d%m%y")
 
+skip.hind<-0
+ic.date.w <- format(ic.date, "%a")
+
+if(ic.date.w != "seg" & ic.date.w != "qui" & ic.date.w != "Seg" & ic.date.w != "Qui" & ic.date.w != "Mon" & ic.date.w != "Thu"){
+  print("não Seg/Qui")
+  source(paste0(work.dir,"/Auxiliar/rwpar_function.R"))
+  source(paste0(work.dir,"/Auxiliar/readparandcorrectfct_function.R"))
+  
+  rw<-rwf(model,ic.date.char,conf.file,input.dir.f,ndays.fct,n.subbac,n.ens.f)
+  cod<-rw[[1]]
+  fct.filtered <- rw[[2]] #  fct com todos os membros do ensemble em uma mesma linha nao utilizado)
+  fct.df.sortedcod <- rw[[3]] # fct com tds sub-bacias em linhas
+  skip.hind<-rw[[4]] # label p/ pular hindcast qdo usada estimativa de parametros
+  
+  ifelse(!dir.exists(paste0(out.dir,"/",as.character(ic.date.char),"00")), dir.create(paste0(out.dir,"/",as.character(ic.date.char),"00"), recursive = TRUE), FALSE)
+  
+  if(ic.date.w == "qua" || ic.date.w == "ter" || ic.date.w == "Qua" || ic.date.w == "Ter" || ic.date.w == "Wed" || ic.date.w == "Tue"){
+    extended_run_date<-floor_date(as.Date(ic.date, format="%Y%m%d"), "week", 1)
+  } else if (ic.date.w == "sex" || ic.date.w == "sab" || ic.date.w == "dom" || ic.date.w == "Sex" || ic.date.w == "Sab" || ic.date.w == "Dom" || ic.date.w == "Fri" || ic.date.w == "Sat" || ic.date.w == "Sun"){
+    extended_run_date<-floor_date(as.Date(ic.date, format="%Y%m%d"), "week", 4)
+  }
+  
+  
+  extended_run_date_ddmmyy<-format(extended_run_date,"%d%m%y")
+  print(paste0("usando parametros de ",extended_run_date_ddmmyy))
+  
+  dl <- list.dirs(path = paste0(work.dir,"/",as.character(extended_run_date_ddmmyy),"/parameters"), full.names = FALSE , recursive = FALSE)
+  print(paste0("parametros já estimados para o aproveitamento: ",dl))
+  
+}else{
+  skip.hind<-0
+}
+
+
+if(skip.hind == 0){
 # funcao que le os arquivos de configuracao (xlsx), arquivos de previsao (fct) reforecasts (hind/ref)
 # retorna cod(PSAT*), dados observados para as datas necessarias, fct e  reforecasts para as datas necessarias e membros do ensemble
-r<-readf(model,ic.date.char,conf.file,input.dir.obs,input.dir.f,input.dir.h,nyears.hind,ndays.fct,n.subbac,n.ens.f,n.ens.h)
+  r<-readf(model,ic.date.char,conf.file,input.dir.obs,input.dir.f,input.dir.h,nyears.hind,ndays.fct,n.subbac,n.ens.f,n.ens.h)
 
 # funcao vai preparar os dados lidos em r para iniciar processo de estimativa dos parametros
 # retorna cod(PSAT*) e dados obs, fct e ref/hind formatados
-w<-wdata(r,nyears.hind,ndays.fct,n.ens.f,n.ens.h,n.subbac)
+  w<-wdata(r,nyears.hind,ndays.fct,n.ens.f,n.ens.h,n.subbac)
 
-cod<-w[[1]]
-obs.filtered <- w[[2]]
-fct.filtered <- w[[3]] #  fct com todos os membros do ensemble em uma mesma linha nao utilizado)
-hind.filtered.sorted <- w[[4]]
-hind.filtered.unsorted <- w[[5]]
-fct.df.sortedcod <- w[[6]] # fct com tds sub-bacias em linhas
+  cod<-w[[1]]
+  obs.filtered <- w[[2]]
+  fct.filtered <- w[[3]] #  fct com todos os membros do ensemble em uma mesma linha nao utilizado)
+  hind.filtered.sorted <- w[[4]]
+  hind.filtered.unsorted <- w[[5]]
+  fct.df.sortedcod <- w[[6]] # fct com tds sub-bacias em linhas
 
+  ifelse(!dir.exists(paste0(out.dir,"/",as.character(ic.date.char),"00")), dir.create(paste0(out.dir,"/",as.character(ic.date.char),"00"), recursive = TRUE), FALSE)
+  
+# funcao para criacao de df vazio  
+  create_empty_table <- function(num_rows, num_cols, type_vec) {
+    frame <- data.frame(matrix(NA, nrow = num_rows, ncol = num_cols))
+    for(i in 1:ncol(frame)) {
+      if(type_vec[i] == 'numeric') {frame[,i] <- as.numeric(frame[,i])}
+      if(type_vec[i] == 'character') {frame[,i] <- as.character(frame[,i])}
+      if(type_vec[i] == 'logical') {frame[,i] <- as.logical(frame[,i])}
+      if(type_vec[i] == 'factor') {frame[,i] <- as.factor(frame[,i])}
+    }
+    return(frame)
+  }
 
-ifelse(!dir.exists(paste0(out.dir,"/",as.character(ic.date.char),"00")), dir.create(paste0(out.dir,"/",as.character(ic.date.char),"00"), recursive = TRUE), FALSE)
+  df.allvars.2.14dayfct <- create_empty_table(nsplits, 13,c('numeric','numeric','numeric','numeric','numeric','numeric','numeric','numeric','numeric','numeric','numeric','numeric','numeric') )
+  colnames(df.allvars.2.14dayfct)<- c("split", "a_obs", "b_obs", "min_prob_obs", "max_prob_obs", "min_obs", "max_obs","a_mod", "b_mod", "min_prob_mod", "max_prob_mod", "min_mod", "max_mod")
+} # if(skip.hind == 0){
+
 
 # laco entre as bacias especificadas em conf.file para estimar parametros e remover vies
 for (bac in cod) {
     print(bac)
-    
+    if(skip.hind == 0){
+      dir.parameters <- paste0(out.dir,"/../../../",as.character(ic.date.format),"/parameters/",bac)
+      print(dir.parameters)
+      ifelse(!dir.exists(dir.parameters), dir.create(dir.parameters, recursive = TRUE), FALSE)
 ###### INICIO PREPARACAO DE OBS E REFORECAST PARA ESTIMATIVA DE PARAMETROS
     # reforecast/hindcast #################################
     hind.filtered.unsorted.bac <- hind.filtered.unsorted[hind.filtered.unsorted$cod==bac,]
@@ -131,6 +187,7 @@ for (bac in cod) {
     L.obs.est <- list()
     L.mod.est <- list()
 
+    L.obs.est.aux <- list() # added
     L.mod.est.aux <- list() # + info que  L.mod.est
                            
     L.mod.parameters <- list()
@@ -171,15 +228,8 @@ for (bac in cod) {
                 erre <- fitdist(x[x>0], distr = "gamma", method = "mle")
             )
         }
-        # s/ bootstrap
-        #fit.gamma.obs <- erre
-        #
-        #a <- unname(fit.gamma.obs$estimate[1])
-        #b <- unname(fit.gamma.obs$estimate[2])
-        #a.obs <- a
-        #b.obs <- b
 
-        # c/ bootstrap
+        # bootstrap
         fit.gamma.obs <- erre
         set.seed(2)
         boot.gamma.obs <- bootdist(fit.gamma.obs, bootmethod = "param", niter=1001)
@@ -192,6 +242,8 @@ for (bac in cod) {
         L.obs.parameters[[countsplits]] <- fit.gamma.obs$estimate
         x.o <- data.frame(estimated.obs,unname(x[order(x)]))
         L.obs.est[[countsplits]] <- x.o  
+        
+        L.obs.est.aux[[countsplits]] <- cbind(rep(countsplits,length(x.o$estimated.obs)),x.o)
 
         obs.pdf <- rbind(obs.pdf,data.frame(x.o[,2]))
 
@@ -228,9 +280,54 @@ for (bac in cod) {
         L.mod.est.aux[[countsplits]] <- cbind(rep(countsplits,length(x.m$estimated.mod)),x.m)
         iCD <- qgamma(estimated.mod,a.obs,b.obs)
         obs.mod.est.pdf <- rbind(obs.mod.est.pdf,data.frame(x.m[,2],iCD))
-
+        
+        cbindPad <- function(...){
+          args <- list(...)
+          n <- sapply(args,nrow)
+          mx <- max(n)
+          pad <- function(x, mx){
+            if (nrow(x) < mx){
+              nms <- colnames(x)
+              padTemp <- matrix(NA, mx - nrow(x), ncol(x))
+              colnames(padTemp) <- nms
+              if (ncol(x)==0) {
+                return(padTemp)
+              } else {
+                return(rbind(x,padTemp))
+              }
+            }
+            else{
+              return(x)
+            }
+          }
+          rs <- lapply(args,pad,mx)
+          return(do.call(cbind,rs))
+        }
+        df.characteristics <- cbindPad(as.data.frame(L.obs.est.aux[[countsplits]]), as.data.frame(L.mod.est.aux[[countsplits]]) )
+        colnames(df.characteristics) <- c("split","prob_obs","obs","split","prob_mod","mod")
+        df.characteristics<-df.characteristics[complete.cases(df.characteristics), ]
+        
+        sprintf_formats.dfhar <- c("%3.2f",rep("%8.3f",2),"%3.2f",rep("%8.3f",2)) # defining print formats
+        to.print <- df.characteristics
+        to.print[] <- mapply(sprintf, sprintf_formats.dfhar,df.characteristics ) # using mapply to format columns according do pre-specified formats
+        write.table(to.print , file = paste0(dir.parameters,"/modest_",countsplits,".txt"),append = FALSE  ,row.names = FALSE, col.names = TRUE,  sep = "  ", quote = FALSE)
+        
+        rm(df.characteristics)
+        
+        allvars<-cbind(countsplits,a.obs,b.obs,min(estimated.obs), max(estimated.obs), min(x.o[,2]), max(x.o[,2]), a.mod, b.mod, min(estimated.mod), max(estimated.mod), min(x.m[,2]), max(x.m[,2]))
+        colnames(allvars)<- c("split", "a_obs", "b_obs", "min_prob_obs", "max_prob_obs", "min_obs", "max_obs","a_mod", "b_mod", "min_prob_mod", "max_prob_mod", "min_mod", "max_mod")
+        df.allvars.2.14dayfct[countsplits,] <- allvars
     } # end for (countsplits in seq(from=1, to=nsplits, by=1)){
 #
+
+    dir.parameters.summary<-paste0(out.dir,"/../../../",as.character(ic.date.format))
+    ifelse(!dir.exists(dir.parameters.summary), dir.create(dir.parameters.summary), FALSE)
+    filename.parameters <- paste0(model,"_",bac,"_m_",as.character(ic.date.format),"_parameterssummary.dat")
+    
+    sprintf_formats <- c("%3.2f",rep("%8.3f",dim(df.allvars.2.14dayfct)[2]-1)) # defining print formats
+    to.print <- df.allvars.2.14dayfct
+    to.print[] <- mapply(sprintf, sprintf_formats, df.allvars.2.14dayfct) # using mapply to format columns according do pre-specified formats
+    write.table(to.print , file = paste0(dir.parameters.summary,"/",filename.parameters),append = FALSE  ,row.names = FALSE, col.names = TRUE,  sep = "  ", quote = FALSE)
 
     print("fim estimativas")
 
@@ -273,6 +370,9 @@ for (bac in cod) {
     colnames(all2gether.final.df) <- c("obs","mod","corr")
     final.df <- all2gether.final.df
 
+  } # if(skip.hind == 0){
+
+    
     fct.filtered.bac <- fct.df.sortedcod[fct.df.sortedcod$V1==bac,]
 
     # corrigir para cada membro do ens
@@ -283,7 +383,32 @@ for (bac in cod) {
 
         V1f <- arr.fct.num
         vector <- V1f
-        EST.list <- lapply(vector, function(y) matchandcorrectfct(y,L.mod.est.aux,3))
+        
+        if(skip.hind == 0){ #correcao com parametros do proprio dia
+          EST.list <- lapply(vector, function(y) matchandcorrectfct(y,L.mod.est.aux,3))
+        }else{
+          if(skip.hind == 1){ #correcao com os parametros do reforecast da 2a ou 5a anterior
+            dir.parameters<-paste0(work.dir,"/",as.character(extended_run_date_ddmmyy))
+            file.summaryfile <- paste0(dir.parameters,"/",model,"_",bac,"_m_",as.character(extended_run_date_ddmmyy),"_parameterssummary.dat")
+            dir.parameters.summaryfiles<-paste0(dir.parameters)
+            file.read.summaryfile <- read.table(file.summaryfile, header=T, stringsAsFactors=FALSE)
+            prec.model.thresh <- file.read.summaryfile[1,'min_mod'] # model reforecast value
+                                                                    # corresponding to min obs prec=0.2
+                                                                    # fct values below prec.model.thresh
+                                                                    # must NOT be corrected
+            parameters.dir.chunkfiles <- paste0(dir.parameters.summaryfiles,"/parameters/",bac)
+            nsplits<-30
+            L<-list()
+            for (split in seq_len(nsplits)){
+              file.2.read <- paste0(parameters.dir.chunkfiles,"/modest_",as.character(split),".txt")
+              file.read <- read.table(file.2.read, header=T, stringsAsFactors=FALSE)
+              L[[split]] <- file.read
+            }
+            EST.list <- lapply(vector, function(y) readparandcorrectfct(y,L,6,file.read.summaryfile)) # 1st list elements outputs are model pr, estimated pr and stuff
+            print("end list thing")
+          }  
+        }  # if/else(skip.hind == 0){
+          
         elist <- sapply(EST.list,function(x) x[1]) 
         prev.corr <- unlist(lapply(elist, function(z) z['pr.corr']))
 
@@ -302,6 +427,6 @@ for (bac in cod) {
 } # END for (bac in cod) {
 
 # formatando e miprimindo saidas
-pr <- formatoutput(model,ic.date.char,out.dir,cod)
+pr <- formatoutput(model,ic.date.char,out.dir,cod,n.ens.f)
 print(paste0("processo finalizado para data ",ic.date.format))
 print(paste0("ids ", cod))

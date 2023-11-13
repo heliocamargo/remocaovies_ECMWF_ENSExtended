@@ -1,5 +1,5 @@
 # formata arquivo por ensmember com as sub-bacias em conf.file
-formatoutput <- function (model,ic.date.char,out.dir,cod) {
+formatoutput <- function (model,ic.date.char,out.dir,cod,n.ens.f) {
 
     pref <- paste0(model,"_m_")
     nbacs <- length(cod)
@@ -7,6 +7,7 @@ formatoutput <- function (model,ic.date.char,out.dir,cod) {
     ic.date <- as.Date(ic.date.char, format = "%Y%m%d")
     ic.date.yyyy <- format(ic.date, "%Y")
     ic.date.format <- format(ic.date, format = "%d%m%y")
+    n.ens <- as.numeric(n.ens.f) - 1
 
     #dir.data.2.format <- out.dir
     #dir.data.2.write.format <- paste0(dir.data.2.format,"/",as.character(ic.date.char),"00")
@@ -15,7 +16,7 @@ formatoutput <- function (model,ic.date.char,out.dir,cod) {
     dir.data.2.write.format <- out.dir
 
 
-    for (ens in seq(from=0,to=50,by=1)){
+    for (ens in seq(from=0,to=n.ens,by=1)){
         char <- paste0("p",ens)
         filename.output <- paste0(pref,ic.date.format,"_",char,".dat")        
         files.list.rv <-  lapply(ic.date.format, function(x) list.files(path=dir.data.2.format,pattern=glob2rx(paste0(pref,"*_",as.character(x),"_",char,".dat")), full.names = T) )

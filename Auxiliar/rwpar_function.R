@@ -1,5 +1,6 @@
 # leitura dos arquivos de configuracao, previsao 
 rwf <- function(model,ic.date.char,conf.file,input.dir.f,ndays.fct,n.subbac,n.ens.f) {
+  library(readxl)
   library(plyr)
   
   # funcao auxiliar: corta caracteres com espacos em branco

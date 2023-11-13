@@ -1,7 +1,7 @@
 # Programa principal
 # Carrega as funcoes utilizadas, gera arquivos por sub-bacia (bac) e chama a funcao que faz a correcao
 
-setwd("C:/He")
+setwd("INSERIR CAMINHO AQUI")
 work.dir <- getwd()
 print(work.dir)
 
@@ -76,9 +76,17 @@ if(ic.date.w != "seg" & ic.date.w != "qui" & ic.date.w != "Seg" & ic.date.w != "
   extended_run_date_ddmmyy<-format(extended_run_date,"%d%m%y")
   print(paste0("usando parametros de ",extended_run_date_ddmmyy))
   
-  dl <- list.dirs(path = paste0(work.dir,"/",as.character(extended_run_date_ddmmyy),"/parameters"), full.names = FALSE , recursive = FALSE)
-  print(paste0("parametros já estimados para o aproveitamento: ",dl))
   
+  
+  dl <- list.dirs(path = paste0(work.dir,"/",as.character(extended_run_date_ddmmyy),"/parameters"), full.names = FALSE , recursive = FALSE)
+  print(dl)
+  if(length(dl) == 0){
+    print(paste0("parametro ainda nao estimado para a rodada de ",as.character(extended_run_date_ddmmyy)))
+    print(paste0("necessario ter rodado a remocao com reforecast/hindcast antes"))
+    stop()
+  } else{
+    print(paste0("parametros já estimados para o(s) aproveitamento(s): ",dl))
+  }
 }else{
   skip.hind<-0
 }
@@ -390,23 +398,35 @@ for (bac in cod) {
           if(skip.hind == 1){ #correcao com os parametros do reforecast da 2a ou 5a anterior
             dir.parameters<-paste0(work.dir,"/",as.character(extended_run_date_ddmmyy))
             file.summaryfile <- paste0(dir.parameters,"/",model,"_",bac,"_m_",as.character(extended_run_date_ddmmyy),"_parameterssummary.dat")
-            dir.parameters.summaryfiles<-paste0(dir.parameters)
-            file.read.summaryfile <- read.table(file.summaryfile, header=T, stringsAsFactors=FALSE)
-            prec.model.thresh <- file.read.summaryfile[1,'min_mod'] # model reforecast value
-                                                                    # corresponding to min obs prec=0.2
-                                                                    # fct values below prec.model.thresh
-                                                                    # must NOT be corrected
-            parameters.dir.chunkfiles <- paste0(dir.parameters.summaryfiles,"/parameters/",bac)
-            nsplits<-30
-            L<-list()
-            for (split in seq_len(nsplits)){
-              file.2.read <- paste0(parameters.dir.chunkfiles,"/modest_",as.character(split),".txt")
-              file.read <- read.table(file.2.read, header=T, stringsAsFactors=FALSE)
-              L[[split]] <- file.read
-            }
-            EST.list <- lapply(vector, function(y) readparandcorrectfct(y,L,6,file.read.summaryfile)) # 1st list elements outputs are model pr, estimated pr and stuff
-            print("end list thing")
-          }  
+            if(file.exists(file.summaryfile)){
+              #print(paste0(file.summaryfile, " existe...prosseguir..."))
+              dir.parameters.summaryfiles<-paste0(dir.parameters)
+              file.read.summaryfile <- read.table(file.summaryfile, header=T, stringsAsFactors=FALSE)
+              prec.model.thresh <- file.read.summaryfile[1,'min_mod'] # model reforecast value
+                                                                      # corresponding to min obs prec=0.2
+                                                                      # fct values below prec.model.thresh
+                                                                      # must NOT be corrected
+              parameters.dir.chunkfiles <- paste0(dir.parameters.summaryfiles,"/parameters/",bac)
+              nsplits<-30
+              L<-list()
+              for (split in seq_len(nsplits)){
+                file.2.read <- paste0(parameters.dir.chunkfiles,"/modest_",as.character(split),".txt")
+                #if(file.exists(file.2.read)){
+                  #print(paste0("arq de estimativas ",file.2.read, " existem...prosseguir"))
+                  file.read <- read.table(file.2.read, header=T, stringsAsFactors=FALSE)
+                  L[[split]] <- file.read
+                #}else{
+                #  print(print(paste0("arq de estimativas ",file.2.read, " nao existe(m)...esse arq e gerado com a rodada de 2a ou 5a imediatamente anterior...")))
+                #  stop()
+                #}
+              }
+              EST.list <- lapply(vector, function(y) readparandcorrectfct(y,L,6,file.read.summaryfile)) # 1st list elements outputs are model pr, estimated pr and stuff
+              print("end list thing")
+            } else {
+              print(paste0(file.summaryfile, " nao existe(m)...rodar com reforecast/hindcast da 2a ou 5a imediatamente anterior para estimar parametros" ))
+              stop()
+            }  
+          } # if skip.hind ==1  
         }  # if/else(skip.hind == 0){
           
         elist <- sapply(EST.list,function(x) x[1]) 

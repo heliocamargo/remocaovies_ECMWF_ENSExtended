@@ -14,6 +14,10 @@ matchandcorrectfct <- function(x,l,column)
     colnames(inner.gevonden) <- c("countsplits", "estmod", "pr")
 
     prob.assoc.x <- inner.gevonden$estmod
+    
+    if(prob.assoc.x >= 0.999) prob.assoc.x<-0.9999
+    if(prob.assoc.x <= 0.001) prob.assoc.x<-0.0001
+    
     a.gam.obs <- L.obs.parameters[[inner.gevonden$countsplits]][1]
     b.gam.obs <- L.obs.parameters[[inner.gevonden$countsplits]][2]
 

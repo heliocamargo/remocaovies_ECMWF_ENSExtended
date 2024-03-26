@@ -9,7 +9,7 @@
 # pacotes necessários:
 - base (default)
 - utils (default)
-- tictoc (timing) ????
+- tictoc (timing)
 - lubridate
 - parallel (versões mais novas já está em "base")
 - fitdistrplus

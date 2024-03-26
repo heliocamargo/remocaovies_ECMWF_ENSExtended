@@ -73,4 +73,4 @@ npoc_gam  = número de processos utilizados para o bottstrapping estimativa da
 Os parâmetros nproc_par e nproc_gamma consideram # de cores para rodadas em paralelo. Por default os parâmetros estão vazios em namelist_ec.txt (nproc_par=1 e nproc_gam=1)
 
 
-# funções auxiliares splitcdf_function.R, add0s_function.R e matchandcorrectfct_function.R estão sendo chamadas por gammarize_funcrion.R
+As funções auxiliares splitcdf_function.R, add0s_function.R e matchandcorrectfct_function.R estão sendo chamadas por gammarize_funcrion.R

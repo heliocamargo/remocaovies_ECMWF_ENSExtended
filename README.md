@@ -5,7 +5,7 @@
 
    [Vídeo da Apresentação](https://ctpmopld.org.br/documents/33692/411965/2a_Reuni%C3%A3o_GT+HM_Prev1%C2%B0m%C3%AAs_20220125.mp4/0068932d-e201-eccc-f1be-c9beb07eefda?version=1.0&t=1643807101432&download=true)
 
-    Link da appresentação sobre a remoção de viés da
+    Link da apresentação sobre a remoção de viés da
    Previsão de Precipitação para o Primeiro Mês da Operação (previsão estedida do ECMWF):
 
     [Apresentação](https://ctpmopld.org.br/group/ct-pmo-pld/gt-dados-hidrometeorol%C3%B3gicos/-/document_library/OVp6moe0yNrQ/view_file/411955?_com_liferay_document_library_web_portlet_DLPortlet_INSTANCE_OVp6moe0yNrQ_redirect=https%3A%2F%2Fctpmopld.org.br%2Fgroup%2Fct-pmo-pld%2Fgt-dados-hidrometeorol%25C3%25B3gicos%2F-%2Fdocument_library%2FOVp6moe0yNrQ%2Fview%2F411941%3F_com_liferay_document_library_web_portlet_DLPortlet_INSTANCE_OVp6moe0yNrQ_redirect%3Dhttps%253A%252F%252Fctpmopld.org.br%252Fgroup%252Fct-pmo-pld%252Fgt-dados-hidrometeorol%2525C3%2525B3gicos%253Fp_p_id%253Dcom_liferay_document_library_web_portlet_DLPortlet_INSTANCE_OVp6moe0yNrQ%2526p_p_lifecycle%253D0%2526p_p_state%253Dnormal%2526p_p_mode%253Dview)

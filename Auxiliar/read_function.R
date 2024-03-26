@@ -30,6 +30,13 @@ readf <- function(model,ic.date.char,conf.file,input.dir.obs,input.dir.f,input.d
     ic.date.format <- format(ic.date, format = "%d%m%y")
 
     # lendo config  xlsx
+    if(!file.exists(conf.file)){
+      print(paste0(conf.file," does not exist...check it out!"))
+      abortnow()
+    }else{
+      print(paste0(conf.file," exists! proceed..."))
+    }
+
     lookup.xlsx <- read_xlsx(conf.file,"Dados")
     nsubbac <- length(lookup.xlsx$`Codigo ANA`[!is.na(lookup.xlsx$`Codigo ANA`)])
     print(paste0("# de sub-bacias no arquivo de configuracao: ",nsubbac))
@@ -58,6 +65,7 @@ readf <- function(model,ic.date.char,conf.file,input.dir.obs,input.dir.f,input.d
     dim.x.fct.files.read <- unlist(lapply(fct.files.read,function(x) dim(x)[1]))
     dim.y.fct.files.read <- unlist(lapply(fct.files.read,function(x) dim(x)[2]))
     
+
     if(length(dim.x.fct.files.read)==n.ens.f && length(dim.y.fct.files.read)==n.ens.f && length(unique(dim.x.fct.files.read))==1 && length(unique(dim.y.fct.files.read))==1 && unique(dim.x.fct.files.read)==n.subbac && unique(dim.y.fct.files.read)==as.numeric(ndays.fct)+3  ) {
       print("arqs de previsao parecem OK...")
     }else{

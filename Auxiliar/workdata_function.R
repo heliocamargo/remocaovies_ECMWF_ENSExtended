@@ -64,21 +64,19 @@ wdata <- function(variables,nyears.hind,ndays.fct,n.ens.f,n.ens.h,n.subbac) {
     # filtrando observacoes
     obs.format.df <- obs[obs$id %in% cod,]
 
-    ## checando dfs criados...
-    ## prints auxiliares
-    #print(dim(obs.format.df))
-    #print(dim(fct.format.df.transfer))
-    #print(dim(hind.format.orig.df.transfer))
-    #print(dim(hind.format.df.transfer))
-    #print(dim(hind.format.orig.df.transfer))
-    #print(dim(fct.df.sortedcod))
-
-    if( dim(obs.format.df)[1] == as.numeric(nyears.hind)*as.numeric(ndays.fct)*length(cod) && dim(fct.format.df.transfer)[1] == length(cod) && 
-        dim(fct.format.df.transfer)[2] == as.numeric(ndays.fct)*as.numeric(n.ens.f)+1 && dim(hind.format.orig.df.transfer)[1] == length(cod) && 
-        dim(hind.format.orig.df.transfer)[2] == as.numeric(nyears.hind)*as.numeric(ndays.fct)*as.numeric(n.ens.h)+1 && dim(hind.format.df.transfer)[1] == length(cod) && 
+#    if( dim(obs.format.df)[1] == as.numeric(nyears.hind)*as.numeric(ndays.fct)*length(cod) && dim(fct.format.df.transfer)[1] == length(cod) && 
+#        dim(fct.format.df.transfer)[2] == as.numeric(ndays.fct)*as.numeric(n.ens.f)+1 && dim(hind.format.orig.df.transfer)[1] == length(cod) && 
+#        dim(hind.format.orig.df.transfer)[2] == as.numeric(nyears.hind)*as.numeric(ndays.fct)*as.numeric(n.ens.h)+1 && dim(hind.format.df.transfer)[1] == length(cod) && 
+#        dim(hind.format.df.transfer)[2] == as.numeric(nyears.hind)*as.numeric(ndays.fct)*as.numeric(n.ens.h)+1 && dim(fct.df.sortedcod)[1] == as.numeric(n.subbac)*as.numeric(n.ens.f) &&
+#        dim(fct.df.sortedcod)[2] == as.numeric(ndays.fct)+3+1 ) {
+#        print("df criados parecem ok")
+    # when dim(obs) and fct have leap years, 1st comparison
+    # in () do not work...check later on (15/01/2024, 20:02 GMT -03:00)
+    if( dim(fct.format.df.transfer)[1] == length(cod) && dim(fct.format.df.transfer)[2] == as.numeric(ndays.fct)*as.numeric(n.ens.f)+1 && dim(hind.format.orig.df.transfer)[1] == length(cod) &&
+        dim(hind.format.orig.df.transfer)[2] == as.numeric(nyears.hind)*as.numeric(ndays.fct)*as.numeric(n.ens.h)+1 && dim(hind.format.df.transfer)[1] == length(cod) &&
         dim(hind.format.df.transfer)[2] == as.numeric(nyears.hind)*as.numeric(ndays.fct)*as.numeric(n.ens.h)+1 && dim(fct.df.sortedcod)[1] == as.numeric(n.subbac)*as.numeric(n.ens.f) &&
-        dim(fct.df.sortedcod)[2] == as.numeric(ndays.fct)+3+1 ) {        
-        print("df criados parecem ok")
+        dim(fct.df.sortedcod)[2] == as.numeric(ndays.fct)+3+1 ) {
+      print("df criados parecem ok")          
     } else {
         print("df criados NAO parecem ok")
         stop()

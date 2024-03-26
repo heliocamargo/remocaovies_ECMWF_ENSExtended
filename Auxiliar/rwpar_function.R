@@ -11,7 +11,8 @@ rwf <- function(model,ic.date.char,conf.file,input.dir.f,ndays.fct,n.subbac,n.en
     firstsub<-substr(x, n+1, nchar(x))
     return(firstsub)
   }
-  
+
+
   print("lendo arquivos conf.file, f...")
   print(paste0("modelo = ",model))
   print(paste0("condicao inicial (ic.date.char) = ",ic.date.char))

@@ -10,7 +10,6 @@ readparandcorrectfct <- function(x,l,column,parameterfile)
   inner.list <- lapply(l, function(y) y[which.min(abs(value-y[,column])),])
   inner.df <- data.frame(Reduce(rbind, inner.list))
   
-  
   #   variables below will find which chunck/split is the closest macth to 
   inner.gevonden <- inner.df[which.min(abs(x-inner.df[,column])),]
   index.gevonden <- which.min(abs(x-inner.df[,column]))

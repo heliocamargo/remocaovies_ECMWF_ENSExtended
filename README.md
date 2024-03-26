@@ -49,18 +49,17 @@ nproc_gamma=
 IMPORTANTE:
 ic.date.char=20240128 # data exemplo
 
-REALIZAR ESTE PROCEDIMENTO ANTES DE DISPARAR O PROCESSO: PARA SABER O NUMERO DE CORES DA MÁRUINA A SER UTILIZADA, INSTALAR A BIBLIOTECA parallelm CARREGAR A MESMA E DIGITAR
-> library(parallel)
-> detectCores()
+REALIZAR ESTE PROCEDIMENTO ANTES DE DISPARAR O PROCESSO: PARA SABER O NUMERO DE "CORES" DA MÁQUINA A SER UTILIZADA, INSTALAR A BIBLIOTECA parallelm CARREGAR A MESMA E DIGITAR
+> library(parallel)  
+> detectCores()  
 
 SUGESTÃO: DEIXAR PELO MENOS 2 CORES DISPONÍVEIS PARA O FUNCIONAMENTO GERAL DO DESKTOP/NOTEBOOK
 
-nproc_par = número de cores utilizados para a remoção de viés
+nproc_par = número de cores utilizados para a remoção de viés  
 npoc_gam  = número de processos utilizados para o bottstrapping estimativa da 
-            função gamma dos dados observados
+            função gamma dos dados observados  
 
 Os parâmetros nproc_par e nproc_gamma consideram # de cores para rodadas em paralelo. Por default os parâmetros estão vazios em namelist_ec.txt (nproc_par=1 e nproc_gam=1)
 
 
-# funções auxiliares splitcdf_function.R, add0s_function.R e matchandcorrectfct_function.R estão 
-sendo chamadas por gammarize_funcrion.R
+# funções auxiliares splitcdf_function.R, add0s_function.R e matchandcorrectfct_function.R estão sendo chamadas por gammarize_funcrion.R

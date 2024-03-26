@@ -31,20 +31,20 @@
 
 ***
 # namelist_ec.txt (default)
-model=ECMWF
-n.subbac=118
-ic.date.char=20240128
-conf.file=./configuracao.xlsx
-input.dir.obs=./Arq_Entrada/OBS
-n.ens.f=101
-n.ens.h=11
-input.dir.f=./Arq_Entrada/ECMWF/Prev
-input.dir.h=./Arq_Entrada/ECMWF/Reforecast
-nyears.hind=20
-ndays.fct=45
-out.dir=./Arq_Saida/ECMWF/Prev_Rem
-nproc_par=
-nproc_gamma=
+model=ECMWF  
+n.subbac=118  
+ic.date.char=20240128  
+conf.file=./configuracao.xlsx  
+input.dir.obs=./Arq_Entrada/OBS  
+n.ens.f=101  
+n.ens.h=11  
+input.dir.f=./Arq_Entrada/ECMWF/Prev  
+input.dir.h=./Arq_Entrada/ECMWF/Reforecast  
+nyears.hind=20  
+ndays.fct=45  
+out.dir=./Arq_Saida/ECMWF/Prev_Rem  
+nproc_par=  
+nproc_gamma=  
 
 IMPORTANTE:
 ic.date.char=20240128 # data exemplo

@@ -67,7 +67,7 @@ REALIZAR ESTE PROCEDIMENTO ANTES DE DISPARAR O PROCESSO: PARA SABER O NUMERO DE 
 SUGESTÃO: DEIXAR PELO MENOS 2 CORES DISPONÍVEIS PARA O FUNCIONAMENTO GERAL DO DESKTOP/NOTEBOOK
 
 nproc_par = número de cores utilizados para a remoção de viés  
-npoc_gam  = número de processos utilizados para o bottstrapping estimativa da 
+npoc_gam  = número de processos utilizados para o bootstrapping estimativa da 
             função gamma dos dados observados  
 
 Os parâmetros nproc_par e nproc_gamma consideram # de cores para rodadas em paralelo. Por default os parâmetros estão vazios em namelist_ec.txt (nproc_par=1 e nproc_gam=1)

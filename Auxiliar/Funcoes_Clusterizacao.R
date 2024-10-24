@@ -311,7 +311,11 @@ gera_arq<-function(i,planilha,clusterizacoes,melhor_metodo,membros,dia_previsao,
   linha3<-which(membros[[i]][,1]=='PSATPIME')
  
   for ( j in 1:45){valor[j]<-round(membros[[mem]][linha,(j+1)]*0.264 +membros[[mem]][linha2,(j+1)]*0.037+membros[[mem]][linha3,(j+1)]*0.699,1)}
-
+  
+  vv<-as.matrix(t(c(-51.77,-03.13,valor)))
+  write.fwf(vv, file=arq, append=TRUE, quote=FALSE, sep=" ", na="",rownames=FALSE, colnames=FALSE, rowCol=NULL, justify="right",
+            formatInfo=FALSE, quoteInfo=TRUE, width=6, eol="\n",qmethod=c("escape", "double"),  scientific=FALSE)
+  
   valor<-NULL
   linha<-which(membros[[i]][,1]=='PSATAMY1')
   linha2<-which(membros[[i]][,1]=='PSATAMY2')
@@ -319,7 +323,7 @@ gera_arq<-function(i,planilha,clusterizacoes,melhor_metodo,membros,dia_previsao,
   linha4<-which(membros[[i]][,1]=='PSATAMY4')
  
   for ( j in 1:45){valor[j]<-round(membros[[mem]][linha,(j+1)]*0.038 +membros[[mem]][linha2,(j+1)]*0.528+membros[[mem]][linha3,(j+1)]*0.265+membros[[mem]][linha4,(j+1)]*0.169,1)}
-  
+
   vv<-as.matrix(t(c(-69.12,-12.60,valor)))
   write.fwf(vv, file=arq, append=TRUE, quote=FALSE, sep=" ", na="",rownames=FALSE, colnames=FALSE, rowCol=NULL, justify="right",
             formatInfo=FALSE, quoteInfo=TRUE, width=6, eol="\n",qmethod=c("escape", "double"),  scientific=FALSE)

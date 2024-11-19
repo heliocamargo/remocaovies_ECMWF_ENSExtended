@@ -17,7 +17,7 @@ readf <- function(model,ic.date.char,conf.file,input.dir.obs,input.dir.f,input.d
     print(paste0("planilha de configuracao (conf.file) = ",conf.file)) # arquivo de configuracao (xlsx)
     print(paste0("dir dos dados obs (input.dir.obs) = ",input.dir.obs)) # dir dos dados obs 
     print(paste0("arquivos de previsao (input.dir.f) = ", input.dir.f)) # arquivos de previsao
-    print(paste0("arquvos de reforecast/hindcast (input.dir.h) = ", input.dir.h)) # arquvos de reforecast/hindcast
+    print(paste0("arquivos de reforecast/hindcast (input.dir.h) = ", input.dir.h)) # arquvos de reforecast/hindcast
     print(paste0("numero de anos de reforecast/hindcast (nyears.hind) = ", nyears.hind)) # numero de anos de reforecast/hindcast
     print(paste0("numero de dias de previsao (ndays.fct) = ", ndays.fct)) # numero de dias de previsao
     print(paste0("numero de sub-bacias operacionais (n.subbac) = ", n.subbac)) # numero total de subbacias operacionais
@@ -66,12 +66,26 @@ readf <- function(model,ic.date.char,conf.file,input.dir.obs,input.dir.f,input.d
     dim.y.fct.files.read <- unlist(lapply(fct.files.read,function(x) dim(x)[2]))
     
 
-    if(length(dim.x.fct.files.read)==n.ens.f && length(dim.y.fct.files.read)==n.ens.f && length(unique(dim.x.fct.files.read))==1 && length(unique(dim.y.fct.files.read))==1 && unique(dim.x.fct.files.read)==n.subbac && unique(dim.y.fct.files.read)==as.numeric(ndays.fct)+3  ) {
-      print("arqs de previsao parecem OK...")
-    }else{
-      print("arqs de previsao NAO parecem OK...")
-      print("abort")
-      stop()
+    if (length(dim.x.fct.files.read) != n.ens.f) {
+      print("O número de dimensões x dos arquivos de previsão não corresponde ao número de membros do ensemble.")
+      stop("Abort: Arquivos de previsão inválidos.")
+    } else if (length(dim.y.fct.files.read) != n.ens.f) {
+      print("O número de dimensões y dos arquivos de previsão não corresponde ao número de membros do ensemble.")
+      stop("Abort: Arquivos de previsão inválidos.")
+    } else if (length(unique(dim.x.fct.files.read)) != 1) {
+      print("As dimensões x dos arquivos de previsão não são consistentes.")
+      stop("Abort: Arquivos de previsão inválidos.")
+    } else if (length(unique(dim.y.fct.files.read)) != 1) {
+      print("As dimensões y dos arquivos de previsão não são consistentes.")
+      stop("Abort: Arquivos de previsão inválidos.")
+    } else if (unique(dim.x.fct.files.read) != n.subbac) {
+      print("O número de sub-bacias nos arquivos de previsão não corresponde ao esperado.")
+      stop("Abort: Arquivos de previsão inválidos.")
+    } else if (unique(dim.y.fct.files.read) != as.numeric(ndays.fct) + 3) {
+      print("O número de dias nos arquivos de previsão não corresponde ao esperado.")
+      stop("Abort: Arquivos de previsão inválidos.")
+    } else {
+      print("Arquivos de previsão parecem OK...")
     }
 
     # rastreando membros do esemble de acordo com os arqs de previsao lidos
@@ -91,12 +105,26 @@ readf <- function(model,ic.date.char,conf.file,input.dir.obs,input.dir.f,input.d
     dim.x.hind.files.read <- unlist(lapply(hind.files.read,function(x) dim(x)[1]))
     dim.y.hind.files.read <- unlist(lapply(hind.files.read,function(x) dim(x)[2]))
     
-    if(length(dim.x.hind.files.read)==n.ens.h && length(dim.y.hind.files.read)==n.ens.h && length(unique(dim.x.hind.files.read))==1 && length(unique(dim.y.hind.files.read))==1 && unique(dim.x.hind.files.read)==n.subbac && unique(dim.y.hind.files.read)==as.numeric(nyears.hind)*as.numeric(ndays.fct)+3 ) {
-      print("arqs de reforecast/hindcast parecem OK...")
-    }else{
-      print("arqs de reforecast/hindcast NAO parecem OK...")
-      print("abort")
-      stop()
+    if (length(dim.x.hind.files.read) != n.ens.h) {
+      print("O número de dimensões x dos arquivos de reforecast/hindcast não corresponde ao número de membros do ensemble.")
+      stop("Abort: Arquivos de reforecast/hindcast inválidos.")
+    } else if (length(dim.y.hind.files.read) != n.ens.h) {
+      print("O número de dimensões y dos arquivos de reforecast/hindcast não corresponde ao número de membros do ensemble.")
+      stop("Abort: Arquivos de reforecast/hindcast inválidos.")
+    } else if (length(unique(dim.x.hind.files.read)) != 1) {
+      print("As dimensões x dos arquivos de reforecast/hindcast não são consistentes.")
+      stop("Abort: Arquivos de reforecast/hindcast inválidos.")
+    } else if (length(unique(dim.y.hind.files.read)) != 1) {
+      print("As dimensões y dos arquivos de reforecast/hindcast não são consistentes.")
+      stop("Abort: Arquivos de reforecast/hindcast inválidos.")
+    } else if (unique(dim.x.hind.files.read) != n.subbac) {
+      print("O número de sub-bacias nos arquivos de reforecast/hindcast não corresponde ao esperado.")
+      stop("Abort: Arquivos de reforecast/hindcast inválidos.")
+    } else if (unique(dim.y.hind.files.read) != as.numeric(nyears.hind) * as.numeric(ndays.fct) + 3) {
+      print("O número de dias nos arquivos de reforecast/hindcast não corresponde ao esperado.")
+      stop("Abort: Arquivos de reforecast/hindcast inválidos.")
+    } else {
+      print("Arquivos de reforecast/hindcast parecem OK...")
     }
 
     # datas correspondentes: reforcast/hindcast e observacoes

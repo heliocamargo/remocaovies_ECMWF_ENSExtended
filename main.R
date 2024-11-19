@@ -60,13 +60,15 @@ ic.date.yyyy <- format(ic.date, "%Y")
 ic.date.format <- format(ic.date, format = "%d%m%y")
 
 # inserted to account for reading gamma function parameters from previous
-# Mon or Thu (when hindcasts are available)
-# block runs all days except from Mon and Thu
+# available hindcast date
+# block runs all days non hindcast days/dates
 skip.hind<-0
 ic.date.w <- format(ic.date, "%a")
-print(ic.date.w)
-if(ic.date.w != "seg" & ic.date.w != "qui" & ic.date.w != "Seg" & ic.date.w != "Qui" & ic.date.w != "Mon" & ic.date.w != "Thu"){
-  print("nao Seg/Qui")
+ic.date.d <- as.numeric(format(ic.date, "%d"))
+
+if (ic.date.d %% 2 == 0) {
+  #print("nao Seg/Qui")
+  print("dia par...usando parametros do dia de hindcast mais recente...")
   source(paste0(work.dir,"/Auxiliar/rwpar_function.R"))
   source(paste0(work.dir,"/Auxiliar/readparandcorrectfct_function.R"))
   
@@ -77,12 +79,8 @@ if(ic.date.w != "seg" & ic.date.w != "qui" & ic.date.w != "Seg" & ic.date.w != "
   skip.hind<-rw[[4]] # label p/ pular hindcast qdo usada estimativa de parametros
   
   ifelse(!dir.exists(paste0(out.dir,"/",as.character(ic.date.char),"00")), dir.create(paste0(out.dir,"/",as.character(ic.date.char),"00"), recursive = TRUE), FALSE)
-  
-  if(ic.date.w == "qua" || ic.date.w == "ter" || ic.date.w == "Qua" || ic.date.w == "Ter" || ic.date.w == "Wed" || ic.date.w == "Tue"){
-    extended_run_date<-floor_date(as.Date(ic.date, format="%Y%m%d"), "week", 1)
-  } else if (ic.date.w == "sex" || ic.date.w == "sab" || ic.date.w == "dom" || ic.date.w == "Sex" || ic.date.w == "Sab" || ic.date.w == "Dom" || ic.date.w == "Fri" || ic.date.w == "Sat" || ic.date.w == "Sun"){
-    extended_run_date<-floor_date(as.Date(ic.date, format="%Y%m%d"), "week", 4)
-  }
+
+  extended_run_date<-floor_date(as.Date(ic.date, format="%Y%m%d"), "day") - days(1)
   
   extended_run_date_ddmmyy<-format(extended_run_date,"%d%m%y")
   print(paste0("usando parametros de ",extended_run_date_ddmmyy))
@@ -99,7 +97,7 @@ if(ic.date.w != "seg" & ic.date.w != "qui" & ic.date.w != "Seg" & ic.date.w != "
     obs.filtered<-NULL
   }
 }else{
-  print("sim Seg/Qui")
+  print("dia impar...hindcast OK")
   extended_run_date_ddmmyy<-NULL
   readparandcorrectfct<-NULL
   

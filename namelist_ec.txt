@@ -1,7 +1,7 @@
 model=ECMWF
-n.subbac=118
-ic.date.char=20240324
-conf.file=./Configuracao.xlsx
+n.subbac=129
+ic.date.char=20241117
+conf.file=./Conf_teste_novos.xlsx
 input.dir.obs=./Arq_Entrada/OBS
 n.ens.f=101
 n.ens.h=11

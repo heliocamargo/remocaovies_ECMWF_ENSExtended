@@ -10,6 +10,40 @@
 
     [Apresentação](https://ctpmopld.org.br/group/ct-pmo-pld/gt-dados-hidrometeorol%C3%B3gicos/-/document_library/OVp6moe0yNrQ/view_file/411955?_com_liferay_document_library_web_portlet_DLPortlet_INSTANCE_OVp6moe0yNrQ_redirect=https%3A%2F%2Fctpmopld.org.br%2Fgroup%2Fct-pmo-pld%2Fgt-dados-hidrometeorol%25C3%25B3gicos%2F-%2Fdocument_library%2FOVp6moe0yNrQ%2Fview%2F411941%3F_com_liferay_document_library_web_portlet_DLPortlet_INSTANCE_OVp6moe0yNrQ_redirect%3Dhttps%253A%252F%252Fctpmopld.org.br%252Fgroup%252Fct-pmo-pld%252Fgt-dados-hidrometeorol%2525C3%2525B3gicos%253Fp_p_id%253Dcom_liferay_document_library_web_portlet_DLPortlet_INSTANCE_OVp6moe0yNrQ%2526p_p_lifecycle%253D0%2526p_p_state%253Dnormal%2526p_p_mode%253Dview)
 
+# novidades (atualizacao 19/11/2024):
+- atualizacao do arquivo Configuracao.xlsx que permite rodar PSATAPI
+- GPM_MERGE.txt em Arq_Entrada/OBS atualizado, correspondente a atualizacao de Configuracao.xlsx
+- Inclusao de outputs de sessionInfo(), com a versao do R e dos pacotes utilizados para a rodada
+
+```R (windows)
+> sessionInfo()
+R version 4.2.0 (2022-04-22 ucrt)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19044)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=Portuguese_Brazil.utf8  LC_CTYPE=Portuguese_Brazil.utf8   
+[3] LC_MONETARY=Portuguese_Brazil.utf8 LC_NUMERIC=C
+[5] LC_TIME=Portuguese_Brazil.utf8    
+
+attached base packages:
+[1] parallel  stats     graphics  grDevices utils     datasets  methods  
+[8] base     
+
+other attached packages:
+[1] foreach_1.5.2      plyr_1.8.9         readxl_1.4.3       lubridate_1.9.3
+[5] fitdistrplus_1.2-1 survival_3.3-1     MASS_7.3-56        tictoc_1.2.1
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.12      codetools_0.2-18 lattice_0.20-45  fansi_1.0.6
+ [5] utf8_1.2.4       grid_4.2.0       cellranger_1.1.0 lifecycle_1.0.4
+ [9] jsonlite_1.8.8   magrittr_2.0.3   pillar_1.9.0     rlang_1.1.3
+[13] cli_3.6.2        Matrix_1.4-1     vctrs_0.6.5      generics_0.1.3
+[17] splines_4.2.0    iterators_1.0.14 glue_1.7.0       compiler_4.2.0
+[21] pkgconfig_2.0.3  timechange_0.3.0 tibble_3.2.1
+```
 
 # novidades (atualizacao 19/11/2024):
 - atualizacao do arquivo Configuracao.xlsx que permite rodar PSATSUIC, PSATJRI, 

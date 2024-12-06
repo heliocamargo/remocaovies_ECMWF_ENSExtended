@@ -81,9 +81,9 @@ PSATBENI, PSATEPB, PSATEGM,  PSATSTOA, PSATENC, PSATAMY1, PSATAMY2, PSATAMY3, PS
 ***
 # namelist_ec.txt (default)
 model=ECMWF  
-n.subbac=129  
-ic.date.char=20241117  
-conf.file=./Conf_teste_novos.xlsx  
+n.subbac=130  
+ic.date.char=20241203  
+conf.file=./Configuracao.xlsx  
 input.dir.obs=./Arq_Entrada/OBS  
 n.ens.f=101  
 n.ens.h=11  
@@ -96,7 +96,7 @@ nproc_par=
 nproc_gamma=  
 
 IMPORTANTE:
-ic.date.char=20240117 # data exemplo
+ic.date.char=20241203 # data exemplo
 
 REALIZAR ESTE PROCEDIMENTO ANTES DE DISPARAR O PROCESSO: PARA SABER O NUMERO DE "CORES" DA MÁQUINA A SER UTILIZADA, INSTALAR A BIBLIOTECA parallel CARREGAR A MESMA E DIGITAR
 > library(parallel)  

@@ -75,10 +75,8 @@ PSATBENI, PSATEPB, PSATEGM,  PSATSTOA, PSATENC, PSATAMY1, PSATAMY2, PSATAMY3, PS
 
 **
 - Rodadas de dias impares utilizarão os respectivos reforecasts para a remoção de viés
-- IMPORTANTE: PARA A REMOÇÃO DE VIÉS DOS DIAS QUE NÃO SÃO IMPARES PARA DETERMINADO(A) APROVEITAMENTO, SUB-BACIA, É NECESSÁRIO/OBRIGATÓRIO QUE O MESMO(A)
+- IMPORTANTE: PARA A REMOÇÃO DE VIÉS DOS DIAS QUE NÃO SÃO IMPARES (i.e. dias pares) PARA DETERMINADO(A) APROVEITAMENTO, SUB-BACIA, É NECESSÁRIO/OBRIGATÓRIO QUE O MESMO(A)
   APROVEITAMENTO/SUB-BACIA TENHA SIDO RODADO NO DIA DE HINDCAST DISPONIVEL IMEDIATAMENTE ANTERIOR
-- para os outros dias (pares): utilizarão os parâmetros estimados na rodada do dia imediatamente anterior
-
 
 ***
 # namelist_ec.txt (default)

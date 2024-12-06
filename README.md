@@ -10,7 +10,7 @@
 
     [Apresentação](https://ctpmopld.org.br/group/ct-pmo-pld/gt-dados-hidrometeorol%C3%B3gicos/-/document_library/OVp6moe0yNrQ/view_file/411955?_com_liferay_document_library_web_portlet_DLPortlet_INSTANCE_OVp6moe0yNrQ_redirect=https%3A%2F%2Fctpmopld.org.br%2Fgroup%2Fct-pmo-pld%2Fgt-dados-hidrometeorol%25C3%25B3gicos%2F-%2Fdocument_library%2FOVp6moe0yNrQ%2Fview%2F411941%3F_com_liferay_document_library_web_portlet_DLPortlet_INSTANCE_OVp6moe0yNrQ_redirect%3Dhttps%253A%252F%252Fctpmopld.org.br%252Fgroup%252Fct-pmo-pld%252Fgt-dados-hidrometeorol%2525C3%2525B3gicos%253Fp_p_id%253Dcom_liferay_document_library_web_portlet_DLPortlet_INSTANCE_OVp6moe0yNrQ%2526p_p_lifecycle%253D0%2526p_p_state%253Dnormal%2526p_p_mode%253Dview)
 
-# novidades (atualizacao 19/11/2024):
+# novidades (atualizacao 06/12/2024):
 - atualizacao do arquivo Configuracao.xlsx que permite rodar PSATAPI
 - GPM_MERGE.txt em Arq_Entrada/OBS atualizado, correspondente a atualizacao de Configuracao.xlsx
 - Inclusao de outputs de sessionInfo(), com a versao do R e dos pacotes utilizados para a rodada

@@ -1,6 +1,6 @@
 model=ECMWF
-n.subbac=130
-ic.date.char=20241203
+n.subbac=131
+ic.date.char=20250423
 conf.file=./Configuracao.xlsx
 input.dir.obs=./Arq_Entrada/OBS
 n.ens.f=101

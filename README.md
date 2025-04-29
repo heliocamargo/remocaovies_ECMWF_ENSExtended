@@ -13,14 +13,6 @@
 # novidades (atualizacao 29/04/2025):
 - atualizacao do arquivo Configuracao.xlsx que permite rodar PSATSALT (Salto)
 
-# novidades (atualizacao 25/04/2025):
-- atualizacao do arquivo Configuracao.xlsx que permite rodar PSATSALT (Salto). (atualizacao parcial)
-- GPM_MERGE.txt em Arq_Entrada/OBS atualizado, correspondente a atualizacao de Configuracao.xlsx
-
-# novidades (atualizacao 06/12/2024):
-- atualizacao do arquivo Configuracao.xlsx que permite rodar PSATAPI
-- GPM_MERGE.txt em Arq_Entrada/OBS atualizado, correspondente a atualizacao de Configuracao.xlsx
-- Inclusao de outputs de sessionInfo(), com a versao do R e dos pacotes utilizados para a rodada
 
 ```
 > R.version
@@ -40,6 +32,15 @@ language       R
 version.string R version 4.2.0 (2022-04-22 ucrt)
 nickname       Vigorous Calisthenics
 ```
+
+# novidades (atualizacao 25/04/2025):
+- atualizacao do arquivo Configuracao.xlsx que permite rodar PSATSALT (Salto). (atualizacao parcial)
+- GPM_MERGE.txt em Arq_Entrada/OBS atualizado, correspondente a atualizacao de Configuracao.xlsx
+
+# novidades (atualizacao 06/12/2024):
+- atualizacao do arquivo Configuracao.xlsx que permite rodar PSATAPI
+- GPM_MERGE.txt em Arq_Entrada/OBS atualizado, correspondente a atualizacao de Configuracao.xlsx
+- Inclusao de outputs de sessionInfo(), com a versao do R e dos pacotes utilizados para a rodada
 
 ```R (windows)
 > sessionInfo()

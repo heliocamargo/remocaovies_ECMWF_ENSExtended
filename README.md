@@ -22,7 +22,8 @@
 - GPM_MERGE.txt em Arq_Entrada/OBS atualizado, correspondente a atualizacao de Configuracao.xlsx
 - Inclusao de outputs de sessionInfo(), com a versao do R e dos pacotes utilizados para a rodada
 
-```R.version
+```
+> R.version
 platform       x86_64-w64-mingw32
 arch           x86_64
 os             mingw32

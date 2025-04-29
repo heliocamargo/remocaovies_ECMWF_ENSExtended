@@ -13,7 +13,7 @@
 # novidades (atualizacao 29/04/2025):
 - atualizacao do arquivo Configuracao.xlsx que permite rodar PSATSALT (Salto)
 
-
+Mais detalhes da versao do R e "attached base packages"
 ```
 > R.version
 platform       x86_64-w64-mingw32

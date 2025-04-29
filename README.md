@@ -22,6 +22,24 @@
 - GPM_MERGE.txt em Arq_Entrada/OBS atualizado, correspondente a atualizacao de Configuracao.xlsx
 - Inclusao de outputs de sessionInfo(), com a versao do R e dos pacotes utilizados para a rodada
 
+```R.version
+platform       x86_64-w64-mingw32
+arch           x86_64
+os             mingw32
+crt            ucrt
+system         x86_64, mingw32
+status
+major          4
+minor          2.0
+year           2022
+month          04
+day            22
+svn rev        82229
+language       R
+version.string R version 4.2.0 (2022-04-22 ucrt)
+nickname       Vigorous Calisthenics
+```
+
 ```R (windows)
 > sessionInfo()
 R version 4.2.0 (2022-04-22 ucrt)
